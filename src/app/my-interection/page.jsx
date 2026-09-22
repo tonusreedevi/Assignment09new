@@ -100,7 +100,7 @@ const MyInteraction = () => {
       {ideas.length === 0 ? (
         <div className="border border-gray-200 rounded-2xl p-8 bg-white">
           <p className="text-gray-500">
-            You haven't commented on any ideas yet.
+            You havent commented on any ideas yet.
           </p>
         </div>
       ) : (

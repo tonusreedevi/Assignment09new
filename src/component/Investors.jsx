@@ -211,8 +211,8 @@ const Investors = () => {
         <div className="mt-16 flex flex-col md:flex-row justify-between gap-6">
 
           <p className="text-2xl md:text-3xl font-medium max-w-2xl">
-            "Invest in ideas that have the potential to change
-            <span className="text-[#88BDF2]"> what comes next.</span>"
+            Invest in ideas that have the potential to change
+            <span className="text-[#88BDF2]"> what comes next.</span>
           </p>
 
           <p className="text-sm uppercase tracking-[0.2em] text-slate-400 self-end">

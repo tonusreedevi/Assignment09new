@@ -14,19 +14,30 @@ const IdeaDetailsPage = async ({ params }) => {
   // If idea doesn't exist
   if (!res.ok) {
     return (
-      <main className="min-h-screen bg-[#f7f7f5] flex items-center justify-center px-6">
-        <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-gray-400 font-semibold mb-4">
-            404 / Not Found
-          </p>
+      <main className="min-h-screen bg-[#f5f5f3] flex items-center justify-center px-6">
+        <div className="w-full max-w-xl border border-black bg-white p-10 md:p-14">
+          <div className="flex items-center gap-3 mb-8">
+            <span className="h-2 w-2 bg-black rounded-full" />
 
-          <h1 className="text-4xl font-bold tracking-tight text-black">
-            Idea Not Found
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
+              404 / Not Found
+            </span>
+          </div>
+
+          <h1 className="text-5xl md:text-6xl font-bold tracking-[-0.05em]">
+            Idea not found.
           </h1>
 
-          <p className="text-gray-500 mt-3">
-            The idea you're looking for doesn't exist.
+          <p className="mt-5 text-gray-500 leading-7">
+            The idea you are looking for may have been removed or does not
+            exist.
           </p>
+
+          <Link href="/ideas">
+            <button className="mt-8 bg-black text-white px-6 py-3 text-sm font-semibold hover:bg-gray-800 transition">
+              Back to Ideas →
+            </button>
+          </Link>
         </div>
       </main>
     );
@@ -42,41 +53,60 @@ const IdeaDetailsPage = async ({ params }) => {
     }
   );
 
-  const comments = commentsRes.ok
-    ? await commentsRes.json()
-    : [];
+  const comments = commentsRes.ok ? await commentsRes.json() : [];
 
   return (
-    <main className="min-h-screen bg-[#f7f7f5] text-black">
+    <main className="min-h-screen bg-[#f5f5f3] text-black">
 
-      {/* PAGE */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-6 lg:py-8">
+      {/* =====================================================
+          TOP NAV / META
+      ===================================================== */}
 
-        {/* TOP BAR */}
-        <div className="flex items-center justify-between mb-6">
+      <div className="border-b border-black">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-[2px] bg-black" />
+          <div className="h-16 flex items-center justify-between">
 
-            <span className="text-[11px] uppercase tracking-[0.3em] font-bold text-gray-500">
-              Idea Details
+            <div className="flex items-center gap-4">
+
+              <Link
+                href="/ideas"
+                className="text-xs font-semibold uppercase tracking-[0.2em] hover:opacity-50 transition"
+              >
+                Ideas
+              </Link>
+
+              <span className="text-gray-300">/</span>
+
+              <span className="text-xs uppercase tracking-[0.2em] text-gray-400">
+                Details
+              </span>
+
+            </div>
+
+            <span className="font-mono text-[10px] text-gray-400">
+              ID / {id.slice(-8)}
             </span>
+
           </div>
 
-          <span className="text-[11px] text-gray-400 font-mono">
-            ID / {id.slice(-6)}
-          </span>
-
         </div>
+      </div>
 
 
-        {/* HERO */}
-        <section className="bg-white border border-gray-200 rounded-[28px] overflow-hidden">
+      {/* =====================================================
+          HERO
+      ===================================================== */}
 
-          <div className="grid lg:grid-cols-[0.95fr_1.05fr] min-h-[430px]">
+      <section className="border-b border-black bg-white">
+
+        <div className="max-w-7xl mx-auto">
+
+          <div className="grid lg:grid-cols-[1fr_0.95fr]">
 
             {/* IMAGE */}
-            <div className="relative bg-black min-h-[300px] lg:min-h-[430px]">
+
+            <div className="relative min-h-[420px] lg:min-h-[600px] bg-black overflow-hidden">
 
               {idea.imageUrl ? (
                 <img
@@ -86,105 +116,138 @@ const IdeaDetailsPage = async ({ params }) => {
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-gray-600 text-sm">
-                    No image available
-                  </span>
+                  <div className="text-center">
+                    <div className="w-10 h-10 border border-gray-700 mx-auto mb-4" />
+
+                    <p className="text-xs uppercase tracking-[0.25em] text-gray-600">
+                      No Image
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {/* IMAGE OVERLAY */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
               {/* CATEGORY */}
-              <div className="absolute top-5 left-5">
-                <span className="px-4 py-2 rounded-full bg-white text-black text-[10px] uppercase tracking-[0.18em] font-bold">
+
+              <div className="absolute top-7 left-7">
+
+                <span className="inline-flex bg-white text-black px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em]">
                   {idea.category}
                 </span>
+
               </div>
 
-              {/* BOTTOM IMAGE TEXT */}
-              <div className="absolute bottom-6 left-6 right-6">
 
-                <p className="text-[10px] uppercase tracking-[0.25em] text-white/60 mb-2">
-                  Featured Concept
-                </p>
+              {/* IMAGE FOOTER */}
 
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-white" />
+              <div className="absolute bottom-7 left-7 right-7 flex items-end justify-between">
 
-                  <span className="text-xs text-white/80">
-                    Innovation / Concept
-                  </span>
+                <div>
+
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-white/50 mb-2">
+                    IdeaVault / Concept
+                  </p>
+
+                  <div className="flex items-center gap-2">
+
+                    <span className="w-2 h-2 bg-white rounded-full" />
+
+                    <span className="text-xs text-white/80">
+                      Community Idea
+                    </span>
+
+                  </div>
+
                 </div>
+
+                <span className="font-mono text-[10px] text-white/40">
+                  01
+                </span>
 
               </div>
 
             </div>
 
 
-            {/* HERO CONTENT */}
-            <div className="p-7 md:p-10 lg:p-12 flex flex-col justify-between">
+            {/* CONTENT */}
+
+            <div className="flex flex-col justify-between p-7 md:p-12 lg:p-14">
 
               <div>
 
-                <div className="flex items-center gap-2 mb-5">
-                  <span className="w-2 h-2 rounded-full bg-black" />
+                <div className="flex items-center gap-3 mb-8">
+
+                  <span className="w-8 h-px bg-black" />
 
                   <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
                     Idea Proposal
                   </span>
+
                 </div>
 
 
-                <h1 className="text-4xl md:text-5xl lg:text-[54px] font-bold tracking-[-0.04em] leading-[1.02] max-w-xl">
+                <h1 className="text-5xl md:text-6xl lg:text-[68px] font-bold tracking-[-0.06em] leading-[0.95]">
                   {idea.title}
                 </h1>
 
 
-                <p className="text-gray-500 text-base md:text-lg leading-7 mt-6 max-w-xl">
+                <p className="mt-8 text-base md:text-lg leading-8 text-gray-500 max-w-xl">
                   {idea.shortDescription}
                 </p>
 
 
                 {/* TAGS */}
+
                 {idea.tags && (
-                  <div className="flex flex-wrap gap-2 mt-7">
+                  <div className="flex flex-wrap gap-2 mt-9">
+
                     {idea.tags.split(",").map((tag, index) => (
                       <span
                         key={index}
-                        className="border border-gray-200 px-3 py-1.5 rounded-full text-[11px] font-semibold text-gray-600"
+                        className="border border-gray-300 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-600"
                       >
                         #{tag.trim()}
                       </span>
                     ))}
+
                   </div>
                 )}
 
               </div>
 
 
-              {/* BUDGET */}
-              <div className="border-t border-gray-200 mt-10 pt-6 flex items-end justify-between">
+              {/* HERO META */}
 
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">
-                    Estimated Budget
-                  </p>
+              <div className="mt-14 border-t border-black pt-7">
 
-                  <p className="text-3xl md:text-4xl font-bold tracking-tight mt-1">
-                    ৳ {idea.estimatedBudget}
-                  </p>
-                </div>
+                <div className="grid grid-cols-2 gap-8">
+
+                  <div>
+
+                    <p className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+                      Estimated Budget
+                    </p>
+
+                    <p className="text-3xl md:text-4xl font-bold tracking-tight mt-2">
+                      ৳ {idea.estimatedBudget}
+                    </p>
+
+                  </div>
 
 
-                <div className="text-right">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">
-                    Target
-                  </p>
+                  <div>
 
-                  <p className="text-sm font-semibold mt-1 max-w-[150px]">
-                    {idea.targetAudience}
-                  </p>
+                    <p className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+                      Target Audience
+                    </p>
+
+                    <p className="text-sm font-semibold leading-6 mt-2 max-w-[180px]">
+                      {idea.targetAudience}
+                    </p>
+
+                  </div>
+
                 </div>
 
               </div>
@@ -193,236 +256,257 @@ const IdeaDetailsPage = async ({ params }) => {
 
           </div>
 
-        </section>
+        </div>
+
+      </section>
 
 
-        {/* MAIN CONTENT */}
-        <section className="grid lg:grid-cols-[1fr_320px] gap-6 mt-6">
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        <section className="grid lg:grid-cols-[1fr_300px] gap-10 py-12 lg:py-16">
 
 
-          {/* LEFT */}
-          <div className="space-y-5">
+          {/* =================================================
+              MAIN CONTENT
+          ================================================= */}
 
+          <div>
 
-            {/* PROBLEM */}
-            <article className="bg-white border border-gray-200 rounded-[24px] p-7 md:p-9">
+            {/* SECTION HEADER */}
 
-              <div className="flex items-start justify-between mb-7">
+            <div className="flex items-end justify-between border-b border-black pb-5 mb-8">
 
-                <div className="flex items-center gap-4">
+              <div>
 
-                  <span className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">
-                    01
-                  </span>
+                <p className="text-[9px] uppercase tracking-[0.3em] text-gray-400 font-bold">
+                  The Concept
+                </p>
 
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold">
-                      Challenge
-                    </p>
-
-                    <h2 className="text-xl font-bold mt-1">
-                      Problem Statement
-                    </h2>
-                  </div>
-
-                </div>
-
-                <span className="text-gray-300 font-mono text-xs">
-                  /01
-                </span>
+                <h2 className="text-3xl font-bold tracking-tight mt-2">
+                  Explore the idea
+                </h2>
 
               </div>
 
+              <span className="font-mono text-[10px] text-gray-400">
+                01 — 03
+              </span>
 
-              <p className="text-gray-600 leading-8 text-[15px]">
-                {idea.problemStatement}
-              </p>
+            </div>
+
+
+            {/* PROBLEM */}
+
+            <article className="border-b border-gray-300 pb-10 mb-10">
+
+              <div className="flex gap-5">
+
+                <span className="flex-shrink-0 text-[10px] font-mono text-gray-400 pt-1">
+                  01
+                </span>
+
+                <div>
+
+                  <p className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+                    Challenge
+                  </p>
+
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
+                    Problem Statement
+                  </h3>
+
+                  <p className="mt-6 text-gray-600 text-[15px] leading-8 max-w-3xl">
+                    {idea.problemStatement}
+                  </p>
+
+                </div>
+
+              </div>
 
             </article>
 
 
             {/* SOLUTION */}
-            <article className="bg-white border border-gray-200 rounded-[24px] p-7 md:p-9">
 
-              <div className="flex items-start justify-between mb-7">
+            <article className="border-b border-gray-300 pb-10 mb-10">
 
-                <div className="flex items-center gap-4">
+              <div className="flex gap-5">
 
-                  <span className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">
-                    02
-                  </span>
+                <span className="flex-shrink-0 text-[10px] font-mono text-gray-400 pt-1">
+                  02
+                </span>
 
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold">
-                      Approach
-                    </p>
+                <div>
 
-                    <h2 className="text-xl font-bold mt-1">
-                      Proposed Solution
-                    </h2>
-                  </div>
+                  <p className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+                    Approach
+                  </p>
+
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
+                    Proposed Solution
+                  </h3>
+
+                  <p className="mt-6 text-gray-600 text-[15px] leading-8 max-w-3xl">
+                    {idea.proposedSolution}
+                  </p>
 
                 </div>
 
-                <span className="text-gray-300 font-mono text-xs">
-                  /02
-                </span>
-
               </div>
-
-
-              <p className="text-gray-600 leading-8 text-[15px]">
-                {idea.proposedSolution}
-              </p>
 
             </article>
 
 
             {/* DESCRIPTION */}
-            <article className="bg-white border border-gray-200 rounded-[24px] p-7 md:p-9">
 
-              <div className="flex items-start justify-between mb-7">
+            <article>
 
-                <div className="flex items-center gap-4">
+              <div className="flex gap-5">
 
-                  <span className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">
-                    03
-                  </span>
+                <span className="flex-shrink-0 text-[10px] font-mono text-gray-400 pt-1">
+                  03
+                </span>
 
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold">
-                      Overview
-                    </p>
+                <div>
 
-                    <h2 className="text-xl font-bold mt-1">
-                      Detailed Description
-                    </h2>
-                  </div>
+                  <p className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+                    Overview
+                  </p>
+
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
+                    Detailed Description
+                  </h3>
+
+                  <p className="mt-6 text-gray-600 text-[15px] leading-8 max-w-3xl whitespace-pre-line">
+                    {idea.detailedDescription}
+                  </p>
 
                 </div>
 
-                <span className="text-gray-300 font-mono text-xs">
-                  /03
-                </span>
-
               </div>
-
-
-              <p className="text-gray-600 leading-8 text-[15px] whitespace-pre-line">
-                {idea.detailedDescription}
-              </p>
 
             </article>
 
           </div>
 
 
-          {/* RIGHT SIDEBAR */}
-          <aside className="space-y-5">
+          {/* =================================================
+              SIDEBAR
+          ================================================= */}
+
+          <aside>
+
+            <div className="lg:sticky lg:top-8 space-y-5">
 
 
-            {/* TARGET */}
-            <div className="bg-black text-white rounded-[24px] p-7">
+              {/* TARGET */}
 
-              <div className="flex items-center justify-between">
+              <div className="bg-black text-white p-7">
 
-                <p className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-bold">
-                  Target Audience
-                </p>
+                <div className="flex items-center justify-between">
 
-                <span className="text-gray-600 font-mono text-xs">
-                  01
-                </span>
+                  <span className="text-[9px] uppercase tracking-[0.25em] text-gray-500 font-bold">
+                    Target
+                  </span>
 
-              </div>
+                  <span className="font-mono text-[10px] text-gray-600">
+                    01
+                  </span>
 
+                </div>
 
-              <h3 className="text-2xl font-bold tracking-tight mt-6">
-                {idea.targetAudience}
-              </h3>
-
-
-              <div className="w-full h-px bg-gray-800 my-6" />
-
-
-              <p className="text-gray-500 text-sm leading-6">
-                The primary group of people who may benefit from this idea.
-              </p>
-
-            </div>
-
-
-            {/* INFORMATION */}
-            <div className="bg-white border border-gray-200 rounded-[24px] p-7">
-
-              <div className="flex items-center justify-between mb-7">
-
-                <h3 className="font-bold text-lg">
-                  Idea Information
+                <h3 className="text-2xl font-bold tracking-tight mt-8">
+                  {idea.targetAudience}
                 </h3>
 
-                <span className="text-[10px] font-mono text-gray-400">
-                  INFO
+                <div className="h-px bg-gray-800 my-7" />
+
+                <p className="text-sm leading-6 text-gray-500">
+                  The primary audience this concept is designed to serve.
+                </p>
+
+              </div>
+
+
+              {/* INFO */}
+
+              <div className="border border-gray-300 bg-white p-7">
+
+                <div className="flex items-center justify-between border-b border-black pb-5">
+
+                  <h3 className="font-bold">
+                    Information
+                  </h3>
+
+                  <span className="font-mono text-[9px] text-gray-400">
+                    META
+                  </span>
+
+                </div>
+
+
+                <div className="divide-y divide-gray-200">
+
+                  <div className="py-5">
+
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-gray-400 font-bold">
+                      Category
+                    </p>
+
+                    <p className="mt-2 text-sm font-semibold">
+                      {idea.category}
+                    </p>
+
+                  </div>
+
+
+                  <div className="py-5">
+
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-gray-400 font-bold">
+                      Budget
+                    </p>
+
+                    <p className="mt-2 text-xl font-bold">
+                      ৳ {idea.estimatedBudget}
+                    </p>
+
+                  </div>
+
+
+                  <div className="py-5">
+
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-gray-400 font-bold">
+                      Audience
+                    </p>
+
+                    <p className="mt-2 text-sm font-semibold leading-6">
+                      {idea.targetAudience}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              {/* IDEA MARK */}
+
+              <div className="border-t border-black pt-4 flex items-center justify-between">
+
+                <span className="text-[9px] uppercase tracking-[0.25em] font-bold">
+                  IdeaVault
+                </span>
+
+                <span className="font-mono text-[9px] text-gray-400">
+                  {id.slice(-6)}
                 </span>
 
               </div>
-
-
-              <div className="space-y-6">
-
-
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">
-                    Category
-                  </p>
-
-                  <p className="font-semibold mt-2">
-                    {idea.category}
-                  </p>
-                </div>
-
-
-                <div className="border-t border-gray-100 pt-5">
-
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">
-                    Budget
-                  </p>
-
-                  <p className="font-semibold text-lg mt-2">
-                    ৳ {idea.estimatedBudget}
-                  </p>
-
-                </div>
-
-
-                <div className="border-t border-gray-100 pt-5">
-
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">
-                    Audience
-                  </p>
-
-                  <p className="font-semibold mt-2">
-                    {idea.targetAudience}
-                  </p>
-
-                </div>
-
-
-              </div>
-
-            </div>
-
-
-            {/* BOTTOM MARK */}
-            <div className="px-2 pt-2 flex items-center justify-between">
-
-              <span className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold">
-                IdeaVault
-              </span>
-
-              <span className="text-[9px] font-mono text-gray-400">
-                2026
-              </span>
 
             </div>
 
@@ -431,18 +515,94 @@ const IdeaDetailsPage = async ({ params }) => {
         </section>
 
 
-        {/* ADD COMMENT BUTTON */}
-        <div className="mt-8">
-          <Link href={`/add-comments?ideaId=${id}`}>
-            <Button>
-              Add comments
-            </Button>
-          </Link>
+        {/* =====================================================
+            COMMENTS CTA
+        ===================================================== */}
+
+        <section className="border-t border-black py-10">
+
+          <div className="bg-black text-white p-7 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-7">
+
+            <div>
+
+              <p className="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">
+                Community
+              </p>
+
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight mt-2">
+                Have something to say?
+              </h2>
+
+              <p className="text-sm text-gray-500 mt-2">
+                Share your thoughts and join the discussion around this idea.
+              </p>
+
+            </div>
+
+
+            <Link href={`/add-comments?ideaId=${id}`}>
+
+              <Button className="group bg-white text-black px-7 py-3 rounded-none font-semibold text-sm hover:bg-gray-200 transition">
+
+                Add Comment
+
+                <span className="ml-3 inline-block transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+
+              </Button>
+
+            </Link>
+
+          </div>
+
+        </section>
+
+
+        {/* =====================================================
+            COMMENTS
+        ===================================================== */}
+
+        <section className="pb-16">
+
+          <div className="flex items-center justify-between border-b border-black pb-5 mb-8">
+
+            <div>
+
+              <p className="text-[9px] uppercase tracking-[0.3em] text-gray-400 font-bold">
+                Discussion
+              </p>
+
+              <h2 className="text-3xl font-bold tracking-tight mt-2">
+                Community Comments
+              </h2>
+
+            </div>
+
+            <span className="font-mono text-[10px] text-gray-400">
+              {comments.length} COMMENTS
+            </span>
+
+          </div>
+
+          <Comments initialComments={comments} />
+
+        </section>
+
+
+        {/* FOOTER MARK */}
+
+        <div className="border-t border-black py-6 flex items-center justify-between">
+
+          <span className="text-[9px] uppercase tracking-[0.3em] font-bold">
+            IdeaVault
+          </span>
+
+          <span className="text-[9px] uppercase tracking-[0.2em] text-gray-400">
+            Create • Share • Discover
+          </span>
+
         </div>
-
-
-        {/* COMMENTS */}
-        <Comments initialComments={comments} />
 
       </div>
 

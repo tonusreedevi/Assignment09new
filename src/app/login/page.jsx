@@ -205,7 +205,7 @@ const LoginPage = () => {
             <div className="mt-8 border-t border-slate-200 pt-6 text-center">
 
               <p className="text-sm text-slate-500">
-                Don't have an account?
+                Dont have an account?
               </p>
 
               <button
