@@ -4,44 +4,42 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 text-slate-400 px-6 md:px-16 pt-16 pb-8">
+    <footer className="bg-white text-slate-600 px-6 md:px-16 pt-20 pb-8">
       <div className="max-w-7xl mx-auto">
 
         {/* ================= TOP ================= */}
-        <div className="grid lg:grid-cols-2 gap-12 pb-16 border-b border-slate-800">
+        <div className="grid lg:grid-cols-2 gap-16 pb-16 border-b border-slate-200">
 
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-[#88BDF2] flex items-center justify-center">
-                <span className="text-slate-950 font-bold text-lg">
-                  I
-                </span>
-              </div>
+            {/* Logo */}
+            <Link href="/" className="inline-block mb-8">
+              <p className="text-[24px] font-semibold tracking-[-0.05em] leading-none text-slate-950">
+                <span>Idea</span>
+                <span className="font-black text-[#4A90E2]">Vault</span>
+                <span className="ml-1 text-[#88BDF2]">.</span>
+              </p>
+            </Link>
 
-              <h2 className="text-2xl font-bold text-white">
-                IdeaVault
-              </h2>
-            </div>
-
-            <h3 className="text-3xl md:text-5xl font-semibold text-white leading-tight max-w-xl">
+            {/* Main Statement */}
+            <h3 className="text-4xl md:text-5xl font-semibold text-slate-950 leading-[1.05] tracking-tight max-w-xl">
               Give your ideas a place
-              <span className="text-[#88BDF2]"> to grow.</span>
+              <span className="text-[#4A90E2]"> to grow.</span>
             </h3>
 
-            <p className="mt-6 max-w-lg text-slate-400 leading-7">
-              IdeaVault is a platform for sharing ideas, discovering new
-              perspectives, and connecting through meaningful discussions.
+            <p className="mt-6 max-w-lg text-slate-500 leading-7">
+              A space to share ideas, discover different perspectives, and
+              connect through meaningful conversations.
             </p>
           </div>
 
 
           {/* Navigation */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10">
 
             {/* Explore */}
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#88BDF2] mb-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90E2] mb-5">
                 Explore
               </p>
 
@@ -49,7 +47,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     Home
                   </Link>
@@ -58,7 +56,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/ideas"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     All Ideas
                   </Link>
@@ -67,7 +65,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/add-ideas"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     Share an Idea
                   </Link>
@@ -78,7 +76,7 @@ const Footer = () => {
 
             {/* Community */}
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#88BDF2] mb-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90E2] mb-5">
                 Community
               </p>
 
@@ -86,7 +84,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/my-ideas"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     My Ideas
                   </Link>
@@ -95,7 +93,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/my-interactions"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     My Interactions
                   </Link>
@@ -104,7 +102,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/add-ideas"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     Contribute
                   </Link>
@@ -115,7 +113,7 @@ const Footer = () => {
 
             {/* Platform */}
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[#88BDF2] mb-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4A90E2] mb-5">
                 Platform
               </p>
 
@@ -123,7 +121,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/ideas"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     Discover
                   </Link>
@@ -132,7 +130,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     About IdeaVault
                   </Link>
@@ -141,7 +139,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/"
-                    className="hover:text-white transition"
+                    className="hover:text-[#4A90E2] transition-colors"
                   >
                     Contact
                   </Link>
@@ -153,22 +151,31 @@ const Footer = () => {
         </div>
 
 
-        {/* ================= MIDDLE STATEMENT ================= */}
-        <div className="py-12 border-b border-slate-800">
+        {/* ================= IDEA STATEMENT ================= */}
+        <div className="py-12 border-b border-slate-200">
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
 
-            <p className="text-xl md:text-2xl text-slate-300 max-w-2xl leading-relaxed">
-              Share what you think.
-              <span className="text-[#88BDF2]"> Discover what others imagine.</span>
-            </p>
+            <div className="max-w-2xl">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-400 mb-3">
+                The IdeaVault Philosophy
+              </p>
+
+              <p className="text-2xl md:text-3xl font-medium tracking-tight text-slate-950 leading-tight">
+                Share what you think.
+                <span className="text-[#4A90E2]">
+                  {" "}Discover what others imagine.
+                </span>
+              </p>
+            </div>
 
             <Link
               href="/login"
-              className="inline-flex items-center justify-center gap-3 bg-[#88BDF2] text-slate-950 px-6 py-3 font-semibold text-sm hover:bg-[#a5d0f8] transition w-fit"
+              className="group inline-flex items-center gap-4 border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:border-[#88BDF2] hover:bg-[#88BDF2]"
             >
               Share an Idea
-              <span className="text-lg">→</span>
+
+            
             </Link>
 
           </div>
@@ -177,15 +184,23 @@ const Footer = () => {
 
 
         {/* ================= BOTTOM ================= */}
-        <div className="pt-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+        <div className="pt-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
-          <div>
-            <p className="text-sm text-slate-500">
-              © 2026 IdeaVault. All rights reserved.
-            </p>
+          <p className="text-sm text-slate-400">
+            © 2026 IdeaVault. All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-3 text-xs uppercase tracking-[0.15em] text-slate-400">
+            <span>Ideas</span>
+
+            <span className="w-1 h-1 rounded-full bg-[#88BDF2]" />
+
+            <span>Discussion</span>
+
+            <span className="w-1 h-1 rounded-full bg-[#88BDF2]" />
+
+            <span>Innovation</span>
           </div>
-
-          
 
         </div>
 
