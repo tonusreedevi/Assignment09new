@@ -68,7 +68,7 @@ const Navbar = () => {
               </Link>
 
               <Link
-                href="/my-interaction"
+                href="/my-interection"
                 className="rounded-md px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-[#88BDF2]/10 hover:text-slate-950"
               >
                 My Interaction
@@ -187,7 +187,7 @@ const Navbar = () => {
                 </Link>
 
                 <Link
-                  href="/my-interaction"
+                  href="/my-interection"
                   onClick={() => setMenuOpen(false)}
                   className="border-b border-slate-100 py-3 text-sm font-medium text-slate-700"
                 >
