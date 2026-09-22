@@ -14,26 +14,61 @@ import {
   Popover,
 } from "react-aria-components";
 
+import { authClient } from "@/lib/auth-client";
+
 const AddIdeas = () => {
+  const { data: session } = authClient.useSession();
 
-   const onSubmit = async (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const idea = Object.fromEntries(formData.entries())
+  const user = session?.user;
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-        const res = await fetch('http://localhost:5000/idea', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(idea)
-        })
-
-        const data = await res.json()
-
-
+    // Check login
+    if (!user) {
+      alert("Please login first.");
+      return;
     }
+
+    const formData = new FormData(e.currentTarget);
+
+    const idea = {
+      ...Object.fromEntries(formData.entries()),
+
+      // Logged-in user's information
+      userId: user.id,
+      userName: user.name,
+      userImage: user.image || "",
+    };
+
+    console.log("Idea being submitted:", idea);
+
+    try {
+      const res = await fetch("http://localhost:5000/idea", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(idea),
+      });
+
+      const data = await res.json();
+
+      console.log("Server response:", data);
+
+      if (res.ok) {
+        alert("Idea added successfully!");
+
+        // Clear the form
+        e.currentTarget.reset();
+      } else {
+        alert(data.message || "Failed to add idea");
+      }
+    } catch (error) {
+      console.error("Error adding idea:", error);
+      alert("Something went wrong!");
+    }
+  };
 
   const categories = [
     "Tech",
@@ -46,14 +81,9 @@ const AddIdeas = () => {
     "Social",
     "Entertainment",
     "Other",
-
   ];
- 
+
   return (
-
-
-
-
     <main className="min-h-screen bg-slate-50 py-12">
       <div className="mx-auto max-w-5xl px-6">
 
@@ -73,10 +103,11 @@ const AddIdeas = () => {
           </p>
         </div>
 
-
+        {/* Form Container */}
         <div className="rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <form  onSubmit={onSubmit} className="p-6 md:p-10">
+          <form onSubmit={onSubmit} className="p-6 md:p-10">
 
+            {/* ================= BASIC INFORMATION ================= */}
             <section className="mb-10">
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-slate-900">
@@ -92,7 +123,11 @@ const AddIdeas = () => {
 
                 {/* Idea Title */}
                 <div className="md:col-span-2">
-                  <TextField name="title" isRequired className="flex flex-col gap-2">
+                  <TextField
+                    name="title"
+                    isRequired
+                    className="flex flex-col gap-2"
+                  >
                     <Label className="text-sm font-medium text-slate-700">
                       Idea Title
                     </Label>
@@ -164,7 +199,7 @@ const AddIdeas = () => {
                   </Select>
                 </div>
 
-             
+                {/* Tags */}
                 <TextField
                   name="tags"
                   className="flex flex-col gap-2"
@@ -185,11 +220,10 @@ const AddIdeas = () => {
                     Separate multiple tags with commas.
                   </p>
                 </TextField>
-
               </div>
             </section>
 
-            {/* Idea Details */}
+            {/* ================= IDEA DETAILS ================= */}
             <section className="mb-10 border-t border-slate-100 pt-10">
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-slate-900">
@@ -259,11 +293,10 @@ const AddIdeas = () => {
 
                   <FieldError className="text-sm text-red-500" />
                 </TextField>
-
               </div>
             </section>
 
-            {/* Audience & Resources */}
+            {/* ================= AUDIENCE & RESOURCES ================= */}
             <section className="mb-10 border-t border-slate-100 pt-10">
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-slate-900">
@@ -319,11 +352,10 @@ const AddIdeas = () => {
                     Enter the approximate budget required to build the idea.
                   </p>
                 </TextField>
-
               </div>
             </section>
 
-            {/* Image */}
+            {/* ================= IMAGE ================= */}
             <section className="mb-10 border-t border-slate-100 pt-10">
               <div className="mb-6">
                 <h2 className="text-xl font-semibold text-slate-900">
@@ -354,7 +386,7 @@ const AddIdeas = () => {
               </TextField>
             </section>
 
-            {/* Submit */}
+            {/* ================= SUBMIT ================= */}
             <div className="border-t border-slate-100 pt-8">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 

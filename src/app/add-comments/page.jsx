@@ -1,24 +1,40 @@
+
 "use client";
 
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const Addcomment = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // URL থেকে ideaId নেওয়া
   const ideaId = searchParams.get("ideaId");
+
+  // Get logged-in user
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // Check login
+    if (!user) {
+      alert("Please login first to add a comment.");
+      router.push("/login");
+      return;
+    }
 
     const formData = new FormData(e.currentTarget);
 
     const comment = {
       ideaId: ideaId,
+      userId: user.id,
+      userName: user.name,
+      userImage: user.image || "",
       comment: formData.get("comment"),
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     console.log("Comment:", comment);
@@ -37,12 +53,9 @@ const Addcomment = () => {
       console.log("Response:", data);
 
       if (res.ok) {
-        // Comment successfully added
-        console.log("Comment added successfully!");
+        alert("Comment added successfully!");
 
-        // View Details page-এ redirect
-         console.log("Comment added successfully!");
-        router.push (`/ideas/${ideaId}`);
+        router.push(`/ideas/${ideaId}`);
       } else {
         alert(data.message || "Failed to add comment");
       }
@@ -55,7 +68,6 @@ const Addcomment = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-12">
       <div className="mx-auto max-w-3xl px-6">
-
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
 
           <h1 className="mb-2 text-2xl font-bold text-slate-900">
@@ -102,10 +114,10 @@ const Addcomment = () => {
           </form>
 
         </div>
-
       </div>
     </div>
   );
 };
 
 export default Addcomment;
+

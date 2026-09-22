@@ -1,32 +1,27 @@
 
 "use client";
 
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
+import React from "react";
 
 const Navbar = () => {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     await authClient.signOut();
     window.location.href = "/";
   };
-
-  if (isPending) {
-    return null;
-  }
-
-  const isLoggedIn = !!session?.user;
 
   return (
     <div className="bg-white py-3">
       <nav className="mx-auto flex max-w-7xl items-center justify-between">
 
         {/* Left Navigation */}
-        <ul className="flex items-center gap-4">
-
-          {/* Always visible */}
+        <ul className="flex items-center gap-3">
           <li>
             <Link href="/">Home</Link>
           </li>
@@ -35,13 +30,10 @@ const Navbar = () => {
             <Link href="/ideas">Ideas</Link>
           </li>
 
-          {/* Only logged in */}
-          {isLoggedIn && (
+          {user && (
             <>
               <li>
-                <Link href="/my-ideas">
-                  My Ideas
-                </Link>
+                <Link href="/my-ideas">My Ideas</Link>
               </li>
 
               <li>
@@ -51,9 +43,7 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link href="/add-ideas">
-                  Add Ideas
-                </Link>
+                <Link href="/add-ideas">Add Ideas</Link>
               </li>
             </>
           )}
@@ -72,39 +62,58 @@ const Navbar = () => {
         </div>
 
         {/* Right Navigation */}
-        <ul className="flex items-center gap-4">
+        <ul className="flex items-center gap-3">
 
-          {isLoggedIn ? (
+          {user ? (
             <>
-              {/* Logged in */}
+              {/* Profile */}
               <li>
                 <Link href="/profile">
                   Profile
                 </Link>
               </li>
 
+              {/* Avatar */}
               <li>
-                <button
-                  onClick={handleLogout}
-                  className="cursor-pointer"
+                <Link href="/profile">
+                  <Avatar>
+                    <Avatar.Image
+                      referrerPolicy="no-referrer"
+                      alt={user.name || "User"}
+                      src={user.image || undefined}
+                    />
+
+                    <Avatar.Fallback>
+                      {user.name
+                        ? user.name.charAt(0).toUpperCase()
+                        : "U"}
+                    </Avatar.Fallback>
+                  </Avatar>
+                </Link>
+              </li>
+
+              {/* Logout */}
+              <li>
+                <Button
+                  size="sm"
+                  onClick={handleSignOut}
+                  variant="danger"
+                  className="rounded-none"
                 >
                   Logout
-                </button>
+                </Button>
               </li>
             </>
           ) : (
             <>
-              {/* Logged out */}
+              {/* Login */}
               <li>
-                <Link href="/signup">
-                  Sign Up
-                </Link>
+                <Link href="/login">Login</Link>
               </li>
 
+              {/* Sign Up */}
               <li>
-                <Link href="/login">
-                  Login
-                </Link>
+                <Link href="/signup">Sign Up</Link>
               </li>
             </>
           )}

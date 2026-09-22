@@ -1,112 +1,90 @@
 "use client";
 
-import Link from "next/link";
-
 const Banner = () => {
   return (
-    <section className="bg-[#FAF9F6] border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="bg-black border-b border-white/10">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="min-h-[620px] flex flex-col items-center justify-center text-center relative py-24">
 
-        <div className="min-h-[520px] flex items-center justify-center text-center">
+          {/* Subtle grid background */}
+          <div
+            className="absolute inset-0 opacity-[0.06] pointer-events-none"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }}
+          />
 
-          <div className="max-w-3xl">
+          <div className="max-w-4xl relative">
 
-            {/* Small heading */}
+            {/* Small Heading */}
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#88bdf2]" />
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                IdeaVault
+              </p>
+            </div>
 
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-red-700">
-              IdeaVault
-            </p>
-
-
-            {/* Main heading */}
-
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.05em] leading-[1.05] text-slate-950">
+            {/* Main Heading */}
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-semibold tracking-[-0.055em] leading-[0.98] text-white">
               Where ideas
               <br />
-              <span className="text-red-700">
+              <span className="text-[#88bdf2]">
                 become possibilities.
               </span>
             </h1>
 
-
             {/* Description */}
-
-            <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-slate-500">
-              Discover thoughtful ideas, share your own, and connect
-              with people who are building what comes next.
+            <p className="mx-auto mt-8 max-w-xl text-base sm:text-lg leading-8 text-white/45">
+              A simple space to share ideas, discover new perspectives,
+              and connect through meaningful discussions.
             </p>
 
+          </div>
 
-            {/* Buttons */}
+          {/* Platform Highlights */}
+          <div className="mt-20 w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10 border-t border-white/10 relative">
 
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-
-              <Link
-                href="/ideas"
-                className="bg-red-700 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-red-800"
-              >
-                Explore Ideas
-                <span className="ml-2">→</span>
-              </Link>
-
-              <Link
-                href="/add-ideas"
-                className="border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:border-slate-400"
-              >
-                Share an Idea
-              </Link>
-
+            <div className="px-6 py-8 text-left">
+              <p className="text-[11px] font-mono uppercase tracking-widest text-[#88bdf2]">
+                01 — Share
+              </p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                Publish
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white/40">
+                Publish your ideas and make them visible to others.
+              </p>
             </div>
 
+            <div className="px-6 py-8 text-left sm:pl-8">
+              <p className="text-[11px] font-mono uppercase tracking-widest text-[#88bdf2]">
+                02 — Discover
+              </p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                Explore
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white/40">
+                Explore ideas across different topics and categories.
+              </p>
+            </div>
 
-            {/* Bottom information */}
-
-            <div className="mt-14 flex justify-center gap-8 text-sm">
-
-              <div>
-                <p className="font-semibold text-slate-950">
-                  1,200+
-                </p>
-
-                <p className="mt-1 text-slate-500">
-                  Ideas
-                </p>
-              </div>
-
-
-              <div className="h-8 w-px bg-slate-200" />
-
-
-              <div>
-                <p className="font-semibold text-slate-950">
-                  24+
-                </p>
-
-                <p className="mt-1 text-slate-500">
-                  Categories
-                </p>
-              </div>
-
-
-              <div className="h-8 w-px bg-slate-200" />
-
-
-              <div>
-                <p className="font-semibold text-slate-950">
-                  4.8k+
-                </p>
-
-                <p className="mt-1 text-slate-500">
-                  Interactions
-                </p>
-              </div>
-
+            <div className="px-6 py-8 text-left sm:pl-8">
+              <p className="text-[11px] font-mono uppercase tracking-widest text-[#88bdf2]">
+                03 — Interact
+              </p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                Discuss
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white/40">
+                Discuss ideas and exchange perspectives through comments.
+              </p>
             </div>
 
           </div>
 
         </div>
-
       </div>
     </section>
   );
