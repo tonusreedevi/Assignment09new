@@ -63,7 +63,7 @@ const MyIdeas = () => {
             </h1>
 
             <p className="mt-5 text-base leading-7 text-slate-500">
-              Sign in to manage and revisit the ideas you've
+              Sign in to manage and revisit the ideas youve
               shared with the IdeaVault community.
             </p>
 
@@ -149,7 +149,7 @@ const MyIdeas = () => {
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-500">
-              Manage the ideas you've shared and see how
+              Manage the ideas youve shared and see how
               they appear to the IdeaVault community.
             </p>
 

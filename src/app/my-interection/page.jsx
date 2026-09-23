@@ -169,7 +169,7 @@ const MyInteraction = () => {
             </h1>
 
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-500">
-              Revisit the ideas you've commented on and
+              Revisit the ideas youve commented on and
               continue exploring the conversations that
               caught your attention.
             </p>
@@ -194,7 +194,7 @@ const MyInteraction = () => {
           <div>
 
             <p className="text-sm font-semibold text-slate-900">
-              Ideas you've interacted with
+              Ideas youve interacted with
             </p>
 
             <p className="mt-1 text-xs text-slate-400">
@@ -224,7 +224,7 @@ const MyInteraction = () => {
             </h2>
 
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-              You haven't commented on any ideas yet.
+              You havenot commented on any ideas yet.
               Explore the IdeaVault community and join
               a conversation.
             </p>
