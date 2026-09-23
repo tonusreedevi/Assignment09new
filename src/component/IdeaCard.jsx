@@ -1,22 +1,3 @@
-
-// const IdeaCard = ({idea}) => {
-//     const {imageUrl , title , tags , category ,tergetAudience } = idea
-//   return (
-//     <div>
-//       <Image
-//       className=""
-//         alt={title}
-//         src={imageUrl}
-//         height={400}
-//         width={480}
-       
-//        />
-//     </div>
-//   )
-// }
-
-// export default IdeaCard
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,85 +11,132 @@ const IdeaCard = ({ idea }) => {
     tergetAudience,
   } = idea;
 
-  // Handle tags whether it is an array or a string
+  // Handle tags whether it is an array or string
   const tagList = Array.isArray(tags)
     ? tags
     : typeof tags === "string"
-    ? tags.split(",").map((tag) => tag.trim()).filter(Boolean)
+    ? tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean)
     : [];
 
   return (
-    <div className="w-[400px] h-[480px] bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300">
+    <article className="group overflow-hidden border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300">
 
-      {/* Image */}
-      <div className="relative w-full h-[220px]">
+      {/* =========================
+          IMAGE
+      ========================== */}
+
+      <div className="relative h-[220px] w-full overflow-hidden bg-slate-100">
+
         <Image
           src={imageUrl}
           alt={title || "Idea image"}
           fill
-          className="object-cover"
+          className="object-cover transition duration-500 group-hover:scale-105"
         />
 
         {/* Category */}
-        <div className="absolute top-4 left-4">
-          <span className="bg-white/95 backdrop-blur-sm text-gray-800 text-sm font-medium px-4 py-2 rounded-full shadow-sm">
-            {category}
+
+        <div className="absolute left-4 top-4">
+
+          <span className="bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-slate-800 shadow-sm">
+            {category || "General"}
           </span>
+
         </div>
+
       </div>
 
-      {/* Content */}
-      <div className="p-6 h-[260px] flex flex-col">
+
+      {/* =========================
+          CONTENT
+      ========================== */}
+
+      <div className="flex min-h-[290px] flex-col p-6">
 
         {/* Title */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-1">
-          {title}
+
+        <h2 className="line-clamp-2 text-xl font-semibold leading-7 tracking-[-0.02em] text-slate-950">
+          {title || "Untitled Idea"}
         </h2>
 
+
         {/* Target Audience */}
-        <div className="mb-4">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+
+        <div className="mt-5">
+
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-red-700">
             Target Audience
           </p>
 
-          <p className="text-sm text-gray-700 line-clamp-2">
+          <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-slate-500">
             {tergetAudience || "Not specified"}
           </p>
+
         </div>
 
+
         {/* Tags */}
-        <div className="mb-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+
+        <div className="mt-5">
+
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
             Tags
           </p>
 
-          <div className="flex flex-wrap gap-2">
-            {tagList.length > 0 ? (
-              tagList.slice(0, 4).map((tag, index) => (
+          {tagList.length > 0 ? (
+
+            <div className="flex flex-wrap gap-2">
+
+              {tagList.slice(0, 4).map((tag, index) => (
+
                 <span
                   key={index}
-                  className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full"
+                  className="border border-slate-200 px-2.5 py-1 text-xs text-slate-600"
                 >
                   #{tag}
                 </span>
-              ))
-            ) : (
-              <span className="text-sm text-gray-400">
-                No tags
-              </span>
-            )}
-          </div>
+
+              ))}
+
+            </div>
+
+          ) : (
+
+            <p className="text-sm text-slate-400">
+              No tags
+            </p>
+
+          )}
+
         </div>
 
-        {/* Button */}
-            <Link href={`/ideas/${_id}`}>
-        <button className="mt-auto w-full h-11 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 transition">
+
+        {/* =========================
+            BUTTON
+        ========================== */}
+
+        <div className="mt-auto pt-6">
+
+          <Link
+            href={`/ideas/${_id}`}
+            className="flex h-11 w-full items-center justify-center gap-2 bg-slate-950 text-sm font-semibold text-white transition hover:bg-red-700"
+          >
             View Details
-        </button>
-             </Link>
+
+            <span className="transition-transform duration-200 group-hover:translate-x-1">
+              →
+            </span>
+
+          </Link>
+
+        </div>
 
       </div>
-    </div>
+
+    </article>
   );
 };
 

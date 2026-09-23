@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -16,7 +15,6 @@ const Comments = ({ initialComments }) => {
 
   // Edit button
   const handleEdit = (comment) => {
-    // Extra frontend protection
     if (comment.userId !== user?.id) {
       alert("You can only edit your own comment.");
       return;
@@ -122,79 +120,128 @@ const Comments = ({ initialComments }) => {
   };
 
   return (
-    <div className="mt-8">
+    <section className="mt-16 border-t border-slate-200 pt-10">
 
-      {/* HEADER */}
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-2xl font-bold">
-          Comments
-        </h2>
+      {/* =========================
+          HEADER
+      ========================== */}
 
-        <span className="text-sm text-gray-400">
+      <div className="mb-8 flex items-end justify-between">
+
+        <div>
+
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-red-700">
+            Discussion
+          </p>
+
+          <h2 className="text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+            Comments
+          </h2>
+
+        </div>
+
+        <span className="text-sm text-slate-400">
           {comments.length}{" "}
           {comments.length === 1 ? "comment" : "comments"}
         </span>
+
       </div>
 
-      {/* NO COMMENTS */}
+
+      {/* =========================
+          NO COMMENTS
+      ========================== */}
+
       {comments.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-[20px] p-6">
-          <p className="text-gray-500">
-            No comments yet. Be the first to comment!
+
+        <div className="border border-slate-200 bg-white px-6 py-10 text-center">
+
+          <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center border border-slate-200 text-sm font-semibold text-slate-500">
+            —
+          </div>
+
+          <h3 className="text-base font-semibold text-slate-900">
+            No comments yet
+          </h3>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Be the first person to share your thoughts about this idea.
           </p>
+
         </div>
+
       ) : (
-        <div className="space-y-4">
+
+        <div className="divide-y divide-slate-200 border-y border-slate-200">
 
           {comments.map((comment) => {
 
-            // Check ownership
             const isOwner =
               user?.id === comment.userId;
 
             return (
-              <div
+
+              <article
                 key={comment._id}
-                className="bg-white border border-gray-200 rounded-[20px] p-6"
+                className="py-7"
               >
 
-                {/* USER INFO */}
-                <div className="flex items-center gap-3 mb-4">
+                {/* =========================
+                    USER INFORMATION
+                ========================== */}
 
-                  {/* PROFILE IMAGE */}
-                  {comment.userImage ? (
-                    <img
-                      src={comment.userImage}
-                      alt={comment.userName || "User"}
-                      className="w-10 h-10 rounded-full object-cover border border-gray-200"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold">
-                      {comment.userName
-                        ? comment.userName
-                            .charAt(0)
-                            .toUpperCase()
-                        : "U"}
+                <div className="flex items-start justify-between gap-4">
+
+                  <div className="flex items-center gap-3">
+
+                    {/* Profile image */}
+
+                    {comment.userImage ? (
+
+                      <img
+                        src={comment.userImage}
+                        alt={comment.userName || "User"}
+                        className="h-9 w-9 rounded-full border border-slate-200 object-cover"
+                      />
+
+                    ) : (
+
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white">
+                        {comment.userName
+                          ? comment.userName
+                              .charAt(0)
+                              .toUpperCase()
+                          : "U"}
+                      </div>
+
+                    )}
+
+                    <div>
+
+                      <p className="text-sm font-semibold text-slate-900">
+                        {comment.userName || "Unknown User"}
+                      </p>
+
+                      <p className="mt-0.5 text-xs text-slate-400">
+                        {new Date(
+                          comment.createdAt
+                        ).toLocaleString()}
+                      </p>
+
                     </div>
-                  )}
 
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      {comment.userName || "Unknown User"}
-                    </p>
-
-                    <p className="text-xs text-gray-400">
-                      {new Date(
-                        comment.createdAt
-                      ).toLocaleString()}
-                    </p>
                   </div>
 
                 </div>
 
-                {/* EDIT MODE */}
+
+                {/* =========================
+                    EDIT MODE
+                ========================== */}
+
                 {editingId === comment._id ? (
-                  <div>
+
+                  <div className="mt-5">
 
                     <textarea
                       value={editText}
@@ -202,18 +249,19 @@ const Comments = ({ initialComments }) => {
                         setEditText(e.target.value)
                       }
                       rows={4}
-                      className="w-full border border-gray-200 rounded-xl p-4 outline-none focus:border-cyan-500"
+                      className="w-full resize-none border border-slate-300 bg-white p-4 text-sm text-slate-800 outline-none transition focus:border-red-700"
+                      placeholder="Write your comment..."
                     />
 
-                    <div className="flex gap-3 mt-4">
+                    <div className="mt-4 flex gap-3">
 
                       <button
                         onClick={() =>
                           handleUpdate(comment._id)
                         }
-                        className="rounded-xl bg-cyan-600 px-5 py-2 text-sm font-medium text-white hover:bg-cyan-700"
+                        className="bg-red-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-800"
                       >
-                        Save
+                        Save changes
                       </button>
 
                       <button
@@ -221,7 +269,7 @@ const Comments = ({ initialComments }) => {
                           setEditingId(null);
                           setEditText("");
                         }}
-                        className="rounded-xl border border-gray-200 px-5 py-2 text-sm font-medium text-gray-700"
+                        className="border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-400"
                       >
                         Cancel
                       </button>
@@ -229,58 +277,87 @@ const Comments = ({ initialComments }) => {
                     </div>
 
                   </div>
-                ) : (
-                  <>
-                    {/* COMMENT TEXT */}
-                    <p className="text-gray-700 leading-7">
-                      {comment.comment}
-                    </p>
 
-                    {/* UPDATED */}
-                    {comment.updatedAt &&
-                      new Date(comment.updatedAt).getTime() !==
-                        new Date(comment.createdAt).getTime() && (
-                        <p className="text-xs text-gray-400 mt-2">
-                          Edited
-                        </p>
+                ) : (
+
+                  <>
+
+                    {/* =========================
+                        COMMENT TEXT
+                    ========================== */}
+
+                    <div className="mt-5 pl-12">
+
+                      <p className="max-w-3xl text-[15px] leading-7 text-slate-600">
+                        {comment.comment}
+                      </p>
+
+
+                      {/* Edited */}
+
+                      {comment.updatedAt &&
+                        new Date(
+                          comment.updatedAt
+                        ).getTime() !==
+                          new Date(
+                            comment.createdAt
+                          ).getTime() && (
+
+                          <p className="mt-2 text-xs text-slate-400">
+                            Edited
+                          </p>
+
+                        )}
+
+
+                      {/* =========================
+                          OWNER ACTIONS
+                      ========================== */}
+
+                      {isOwner && (
+
+                        <div className="mt-5 flex gap-4">
+
+                          <button
+                            onClick={() =>
+                              handleEdit(comment)
+                            }
+                            className="text-xs font-semibold text-slate-500 transition hover:text-red-700"
+                          >
+                            Edit
+                          </button>
+
+                          <button
+                            onClick={() =>
+                              handleDelete(comment._id)
+                            }
+                            className="text-xs font-semibold text-red-700 transition hover:text-red-800"
+                          >
+                            Delete
+                          </button>
+
+                        </div>
+
                       )}
 
-                    {/* OWNER BUTTONS */}
-                    {isOwner && (
-                      <div className="flex gap-3 mt-5">
+                    </div>
 
-                        <button
-                          onClick={() =>
-                            handleEdit(comment)
-                          }
-                          className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium hover:bg-gray-50"
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          onClick={() =>
-                            handleDelete(comment._id)
-                          }
-                          className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600"
-                        >
-                          Delete
-                        </button>
-
-                      </div>
-                    )}
                   </>
+
                 )}
 
-              </div>
+              </article>
+
             );
+
           })}
 
         </div>
+
       )}
-    </div>
+
+    </section>
   );
 };
 
 export default Comments;
-

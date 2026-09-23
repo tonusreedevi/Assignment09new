@@ -14,7 +14,10 @@ const MyInteraction = () => {
 
   useEffect(() => {
     const fetchMyInteractions = async () => {
-      if (!user?.id) return;
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
 
       try {
         // 1. Get comments made by current user
@@ -24,14 +27,12 @@ const MyInteraction = () => {
 
         const comments = await commentsRes.json();
 
-        console.log("My comments:", comments);
-
         // 2. Get unique idea IDs
         const ideaIds = [
-          ...new Set(comments.map((comment) => comment.ideaId)),
+          ...new Set(
+            comments.map((comment) => comment.ideaId)
+          ),
         ];
-
-        console.log("Idea IDs:", ideaIds);
 
         // 3. Get all ideas
         const ideasRes = await fetch(
@@ -46,6 +47,7 @@ const MyInteraction = () => {
         );
 
         setIdeas(myInteractionIdeas);
+
       } catch (error) {
         console.error(
           "Failed to load my interactions:",
@@ -59,61 +61,200 @@ const MyInteraction = () => {
     fetchMyInteractions();
   }, [user?.id]);
 
+
+  /* =========================
+      NOT LOGGED IN
+  ========================== */
+
   if (!user) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold">
-          My Interaction
-        </h1>
+      <main className="min-h-screen bg-[#FAF9F6]">
 
-        <p className="text-gray-500 mt-3">
-          Please login to see your interactions.
-        </p>
-      </div>
+        <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+
+          <div className="max-w-2xl">
+
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-700">
+              IdeaVault
+            </p>
+
+            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-slate-950">
+              My Interactions
+            </h1>
+
+            <p className="mt-5 text-base leading-7 text-slate-500">
+              Sign in to see the ideas you have commented on
+              and continue your discussions.
+            </p>
+
+          </div>
+
+          <div className="mt-10 border border-slate-200 bg-white p-8">
+
+            <p className="text-sm text-slate-500">
+              Please login to see your interactions.
+            </p>
+
+          </div>
+
+        </section>
+
+      </main>
     );
   }
+
+
+  /* =========================
+      LOADING
+  ========================== */
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold mb-8">
-          My Interaction
-        </h1>
+      <main className="min-h-screen bg-[#FAF9F6]">
 
-        <p className="text-gray-500">
-          Loading your interactions...
-        </p>
-      </div>
+        <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-700">
+            IdeaVault
+          </p>
+
+          <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-slate-950">
+            My Interactions
+          </h1>
+
+          <div className="mt-10 border-y border-slate-200 py-8">
+
+            <div className="flex items-center gap-3">
+
+              <div className="h-2 w-2 animate-pulse rounded-full bg-red-700" />
+
+              <p className="text-sm text-slate-500">
+                Loading your interactions...
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
     );
   }
 
+
+  /* =========================
+      MAIN PAGE
+  ========================== */
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold mb-2">
-        My Interaction
-      </h1>
+    <main className="min-h-screen bg-[#FAF9F6]">
 
-      <p className="text-gray-500 mb-8">
-        Ideas you have commented on.
-      </p>
+      {/* =========================
+          PAGE HEADER
+      ========================== */}
 
-      {ideas.length === 0 ? (
-        <div className="border border-gray-200 rounded-2xl p-8 bg-white">
-          <p className="text-gray-500">
-            You havent commented on any ideas yet.
-          </p>
+      <section className="border-b border-slate-200">
+
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+
+          <div className="max-w-3xl">
+
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-700">
+              Your Activity
+            </p>
+
+            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
+              My Interactions
+            </h1>
+
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-500">
+              Revisit the ideas you've commented on and
+              continue exploring the conversations that
+              caught your attention.
+            </p>
+
+          </div>
+
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ideas.map((idea) => (
-            <IdeaCard
-              key={idea._id}
-              idea={idea}
-            />
-          ))}
+
+      </section>
+
+
+      {/* =========================
+          CONTENT
+      ========================== */}
+
+      <section className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+
+        {/* Results header */}
+
+        <div className="mb-8 flex items-center justify-between border-b border-slate-200 pb-5">
+
+          <div>
+
+            <p className="text-sm font-semibold text-slate-900">
+              Ideas you've interacted with
+            </p>
+
+            <p className="mt-1 text-xs text-slate-400">
+              {ideas.length}{" "}
+              {ideas.length === 1 ? "idea" : "ideas"}
+            </p>
+
+          </div>
+
         </div>
-      )}
-    </div>
+
+
+        {/* =========================
+            EMPTY STATE
+        ========================== */}
+
+        {ideas.length === 0 ? (
+
+          <div className="border border-slate-200 bg-white px-6 py-16 text-center">
+
+            <div className="mx-auto flex h-12 w-12 items-center justify-center border border-slate-200 text-lg font-semibold text-slate-400">
+              —
+            </div>
+
+            <h2 className="mt-5 text-xl font-semibold text-slate-950">
+              No interactions yet
+            </h2>
+
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+              You haven't commented on any ideas yet.
+              Explore the IdeaVault community and join
+              a conversation.
+            </p>
+
+          </div>
+
+        ) : (
+
+          /* =========================
+              IDEA GRID
+          ========================== */
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+            {ideas.map((idea) => (
+
+              <IdeaCard
+                key={idea._id}
+                idea={idea}
+              />
+
+            ))}
+
+          </div>
+
+        )}
+
+      </section>
+
+    </main>
   );
 };
 
